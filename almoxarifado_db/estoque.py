@@ -36,6 +36,27 @@ def adicionar_item(nome: str, quantidade: int, unidade_medida: str):
     finally:
         conn.close()
 
-# Se você rodasse este arquivo diretamente, ele não funcionaria 
-# bem por causa da importação relativa (.database), 
-# mas em breve criaremos o main.py para testar as funções.
+
+# --- CRUD: READ (R) ---
+
+def listar_todos_itens():
+    """
+    Retorna todos os itens presentes na tabela Itens.
+    
+    Returns:
+        list of sqlite3.Row: Uma lista de objetos Item, ou uma lista vazia.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    itens = []
+    
+    try:
+        cursor.execute("SELECT id, nome, quantidade, unidade_medida FROM Itens ORDER BY nome")
+        # O fetchall() retorna todas as linhas como objetos sqlite3.Row (dicionários)
+        itens = cursor.fetchall() 
+    except sqlite3.Error as e:
+        print(f"\n[ERRO] Falha ao listar itens: {e}")
+    finally:
+        conn.close()
+        
+    return itens
