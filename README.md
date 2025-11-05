@@ -41,13 +41,4 @@ Estamos na fase de **Setup do Projeto Django (F-07)**, com a base de dados (Mode
 | `almoxarifado_web/urls.py` | Roteamento principal, direcionando o tráfego para a aplicação `estoque`. |
 
 ---
-
-### ⚙️ Guia de Instalação e Execução Local
-
-Siga estes passos no seu terminal para configurar e iniciar o projeto:
-
-#### 1. Clonar o Repositório
-
-```bash
-git clone [https://docs.github.com/pt/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github](https://docs.github.com/pt/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github)
-cd [NOME DO SEU REPOSITÓRIO]
+]
