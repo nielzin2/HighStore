@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almoxarifado - {{ titulo }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        table { width: 80%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .acoes { width: 150px; text-align: center; }
+        .vazio { color: #888; text-align: center; padding: 20px; }
+        .add-btn { display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+    <h1>{{ titulo }}</h1>
+    
+    <a href="#" class="add-btn">➕ Adicionar Novo Item (CRUD C)</a>
+    
+    {% if itens %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome do Item</th>
+                    <th>Quantidade</th>
+                    <th>Unidade</th>
+                    <th class="acoes">Ações (CRUD U/D)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in itens %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>{{ item.unidade_medida }}</td>
+                    <td class="acoes">
+                        <a href="#">Editar</a> | <a href="#">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="vazio">Nenhum item encontrado no estoque.</p>
+    {% endif %}
+    
+</body>
+</html>
