@@ -11,6 +11,9 @@ urlpatterns = [
     path('novo/', views.adicionar_item, name='adicionar_item'), 
     
     # Rota 3: Editar Item Específico (CRUD U)
-    # <int:pk> captura um número inteiro (a Primary Key) e passa para a view
     path('editar/<int:pk>/', views.editar_item, name='editar_item'),
+    
+    # Rota 4: Excluir Item Específico (CRUD D)
+    # <int:pk> captura o ID para exclusão
+    path('excluir/<int:pk>/', views.excluir_item, name='excluir_item'), 
 ]
