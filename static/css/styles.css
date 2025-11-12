@@ -1,0 +1,103 @@
+/* Estilos Globais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Estilos de Botões e Links de Ação */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background-color: #28a745; /* Verde para adicionar */
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #218838;
+}
+
+.btn-edit {
+    color: #007bff;
+    text-decoration: none;
+}
+.btn-delete {
+    color: #dc3545;
+    text-decoration: none;
+}
+
+/* Estilos de Tabela */
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.item-table th, .item-table td {
+    padding: 12px 15px;
+    border: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.item-table th {
+    background-color: #e9ecef;
+    color: #495057;
+    font-weight: 600;
+}
+
+.item-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Estilos de Formulário */
+form p {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"], 
+form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.errorlist {
+    color: #dc3545;
+    list-style: none;
+    padding: 0;
+    margin-top: 5px;
+}
