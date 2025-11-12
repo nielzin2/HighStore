@@ -2,23 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404 # Importamos 'g
 from .models import Item
 from .forms import ItemForm
 
-# --- CRUD: READ (R) ---
-
-def lista_itens(request):
-    """
-    View responsável por buscar todos os itens no banco de dados 
-    e enviá-los para o template de listagem.
-    """
-    itens = Item.objects.all().order_by('nome')
-    
-    context = {
-        'itens': itens,
-        'titulo': 'Estoque Geral do Almoxarifado'
-    }
-    
-    return render(request, 'estoque/lista_itens.html', context)
-
-
 # --- CRUD: CREATE (C) ---
 
 def adicionar_item(request):
@@ -40,6 +23,22 @@ def adicionar_item(request):
     }
     
     return render(request, 'estoque/novo_item.html', context)
+
+# --- CRUD: READ (R) ---
+
+def lista_itens(request):
+    """
+    View responsável por buscar todos os itens no banco de dados 
+    e enviá-los para o template de listagem.
+    """
+    itens = Item.objects.all().order_by('nome')
+    
+    context = {
+        'itens': itens,
+        'titulo': 'Estoque Geral do Almoxarifado'
+    }
+    
+    return render(request, 'estoque/lista_itens.html', context)
 
 
 # --- CRUD: UPDATE (U) ---
@@ -69,3 +68,29 @@ def editar_item(request, pk):
     
     # Reutiliza o template do novo item, pois o formulário é o mesmo!
     return render(request, 'estoque/novo_item.html', context)
+
+# --- CRUD: DELETE (D) ---
+
+def excluir_item(request, pk):
+    """
+    View responsável por excluir um item do banco de dados e redirecionar.
+    
+    Recomendação: Em um projeto real, você criaria um template 
+    de confirmação (GET) e processaria a exclusão (POST). 
+    Aqui, simplificamos para processar a exclusão diretamente.
+    """
+    item = get_object_or_404(Item, pk=pk)
+    
+    if request.method == 'POST':
+        item.delete()
+        # Redireciona de volta para a listagem após a exclusão
+        return redirect('estoque:lista_itens')
+    
+    # Se for GET (acesso direto pela URL), pedimos confirmação
+    context = {
+        'item': item,
+        'titulo': f'Confirmar Exclusão: {item.nome}'
+    }
+    
+    # Usaremos um template de confirmação simples
+    return render(request, 'estoque/confirmar_exclusao.html', context)
