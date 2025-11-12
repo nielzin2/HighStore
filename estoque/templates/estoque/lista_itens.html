@@ -40,7 +40,7 @@
                     <td>{{ item.quantidade }}</td>
                     <td>{{ item.unidade_medida }}</td>
                     <td class="acoes">
-                        <a href="#">Editar</a> | <a href="#">Excluir</a>
+                        <a href="{% url 'estoque:editar_item' pk=item.id %}">Editar</a> | <a href="#">Excluir</a>
                     </td>
                 </tr>
                 {% endfor %}
