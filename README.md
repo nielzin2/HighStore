@@ -24,8 +24,8 @@ O sistema é construído sobre uma arquitetura **Python** robusta, garantindo es
 | :--- | :--- | :--- |
 | **C - Criação (`Create`)** | Formulários para registrar novos itens no estoque (nome, quantidade, unidade). | 🟢 Em Desenvolvimento |
 | **R - Leitura (`Read`)** | Listagem completa de todos os itens e visualização detalhada. | 🟢 Em Desenvolvimento |
-| **U - Atualização (`Update`)** | Edição de informações e ajuste de quantidades de itens existentes. | 🟡 Pendente |
-| **D - Exclusão (`Delete`)** | Remoção permanente de itens do registro. | 🟡 Pendente |
+| **U - Atualização (`Update`)** | Edição de informações e ajuste de quantidades de itens existentes. | 🟢 Em Desenvolvimento |
+| **D - Exclusão (`Delete`)** | Remoção permanente de itens do registro. | 🟢 Em Desenvolvimento |
 
 ---
 
@@ -41,4 +41,3 @@ Estamos na fase de **Setup do Projeto Django (F-07)**, com a base de dados (Mode
 | `almoxarifado_web/urls.py` | Roteamento principal, direcionando o tráfego para a aplicação `estoque`. |
 
 ---
-]
