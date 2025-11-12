@@ -7,47 +7,28 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         h1 { color: #333; }
-        table { width: 80%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .acoes { width: 150px; text-align: center; }
-        .vazio { color: #888; text-align: center; padding: 20px; }
-        .add-btn { display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 20px;}
+        form { background: #f9f9f9; padding: 20px; border-radius: 8px; width: 400px; margin: 20px 0; border: 1px solid #ddd; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #45a049; }
+        .back-link { display: inline-block; margin-top: 15px; color: #007bff; text-decoration: none; }
+        /* Estilos para erros de validação do Django */
+        .errorlist { color: red; list-style: none; padding: 0; margin-top: -10px; margin-bottom: 10px;}
     </style>
 </head>
 <body>
     <h1>{{ titulo }}</h1>
     
-    <a href="#" class="add-btn">➕ Adicionar Novo Item (CRUD C)</a>
-    
-    {% if itens %}
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome do Item</th>
-                    <th>Quantidade</th>
-                    <th>Unidade</th>
-                    <th class="acoes">Ações (CRUD U/D)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in itens %}
-                <tr>
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.nome }}</td>
-                    <td>{{ item.quantidade }}</td>
-                    <td>{{ item.unidade_medida }}</td>
-                    <td class="acoes">
-                        <a href="#">Editar</a> | <a href="#">Excluir</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p class="vazio">Nenhum item encontrado no estoque.</p>
-    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <button type="submit">Salvar Item no Estoque</button>
+    </form>
+
+    <a href="{% url 'estoque:lista_itens' %}" class="back-link">← Voltar para a Listagem</a>
     
 </body>
 </html>
