@@ -1,30 +1,29 @@
 from django.db import models
 
-# O nome desta classe será usado pelo Django para criar a tabela 'estoque_item' no DB.
 class Item(models.Model):
-    # O campo 'id' é criado automaticamente como Primary Key pelo Django.
-
-    nome = models.CharField(
-        max_length=200, 
-        unique=True, 
-        verbose_name="Nome do Item"
-    )
-
-    quantidade = models.IntegerField(
-        default=0, 
-        verbose_name="Quantidade em Estoque"
-    )
-
-    unidade_medida = models.CharField(
-        max_length=50, 
-        verbose_name="Unidade de Medida"
-    )
+    """
+    Representa um item no estoque. Inclui HS-11 e HS-13 (Timestamps) para o futuro.
+    """
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField(blank=True, null=True)
+    quantidade = models.IntegerField(default=0)
+    localizacao = models.CharField(max_length=50, blank=True, null=True)
+    
+    # HS-11: Campo para Estoque Mínimo
+    estoque_minimo = models.IntegerField(default=5, help_text="Quantidade mínima para alerta.")
+    
+    # HS-13: Campos de Data e Hora
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        # Nome da tabela no plural para facilitar a visualização no admin/código
-        verbose_name_plural = "Itens"
-        ordering = ['nome'] # Ordena por nome por padrão
+        ordering = ['nome']
 
     def __str__(self):
-        # Representação do objeto Item em texto
-        return f"{self.nome} ({self.quantidade} {self.unidade_medida})"
+        return self.nome
+        
+    def precisa_repor(self):
+        """
+        HS-12: Verifica se a quantidade atual está abaixo ou igual ao estoque mínimo.
+        """
+        return self.quantidade <= self.estoque_minimo
