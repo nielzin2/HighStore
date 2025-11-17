@@ -96,3 +96,7 @@ STATIC_URL = '/static/'
 
 # Padrão para a Primary Key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/'  # Redireciona para a página inicial após o login bem-sucedido
+LOGOUT_REDIRECT_URL = '/' # Redireciona para a página inicial após o logout
+LOGIN_URL = '/accounts/login/' # Define a URL de login
