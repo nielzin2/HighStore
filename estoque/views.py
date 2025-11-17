@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item
 from .forms import ItemForm
-from django.db.models import Q # Importamos Q para buscas complexas
+from django.db.models import Q, F
 
 # --- CRUD: READ (R) com Busca/Filtro (HS-10) ---
 
@@ -9,14 +9,10 @@ def lista_itens(request):
     """
     Lista todos os itens no estoque, com suporte à busca por nome (HS-10).
     """
-    # Inicia o QuerySet com todos os itens
     itens = Item.objects.all().order_by('nome')
-    
-    # Verifica se há um termo de busca na query string (ex: ?q=parafuso)
     query = request.GET.get('q')
     
     if query:
-        # Filtra os itens onde o 'nome' contém o termo de busca (case-insensitive)
         itens = itens.filter(
             Q(nome__icontains=query)
         ).distinct()
@@ -25,6 +21,26 @@ def lista_itens(request):
         'itens': itens,
         'titulo': 'Estoque Geral',
     }
+    return render(request, 'estoque/lista_itens.html', context)
+
+# --- GESTÃO: ALERTA DE ESTOQUE MÍNIMO (HS-12) ---
+
+def alerta_estoque(request):
+    """
+    Lista todos os itens cuja quantidade atual está abaixo ou igual ao estoque_minimo.
+    """
+    # Filtra os itens onde 'quantidade' é menor ou igual a 'estoque_minimo' usando F (Field)
+    itens_criticos = Item.objects.filter(
+        quantidade__lte=F('estoque_minimo')
+    ).order_by('quantidade') 
+    
+    context = {
+        'itens': itens_criticos,
+        'titulo': 'ALERTA: Itens Abaixo do Estoque Mínimo',
+        'is_alerta_view': True # Flag para ajustes no template
+    }
+    
+    # Reutiliza o template de listagem
     return render(request, 'estoque/lista_itens.html', context)
 
 # --- CRUD: CREATE (C) ---
