@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{{ titulo }}</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">{{ item.nome }}</h5>
+            <hr>
+            <p class="card-text"><strong>ID:</strong> {{ item.pk }}</p>
+            <p class="card-text"><strong>Descrição:</strong> {{ item.descricao|default:"Nenhuma descrição." }}</p>
+            
+            <p class="card-text">
+                <strong>Quantidade em Estoque:</strong> 
+                <span class="badge bg-{{ item.precisa_repor|yesno:'danger,success' }}">
+                    {{ item.quantidade }}
+                </span>
+            </p>
+            <p class="card-text"><strong>Estoque Mínimo:</strong> {{ item.estoque_minimo }}</p>
+            <p class="card-text">
+                <strong>Status de Reposição:</strong> 
+                {% if item.precisa_repor %}
+                    <span class="badge bg-danger">REPOR</span>
+                {% else %}
+                    <span class="badge bg-success">OK</span>
+                {% endif %}
+            </p>
+            <p class="card-text"><strong>Localização:</strong> {{ item.localizacao|default:"Não informada." }}</p>
+            
+            <hr>
+            <p class="card-text text-muted small">
+                <strong>Criado em:</strong> {{ item.created_at|date:"d/m/Y H:i" }}
+            </p>
+            <p class="card-text text-muted small">
+                <strong>Última Atualização:</strong> {{ item.updated_at|date:"d/m/Y H:i" }}
+            </p>
+            <hr>
+            <a href="{% url 'estoque:editar_item' item.pk %}" class="btn btn-warning me-2">Editar Item</a>
+            <a href="{% url 'estoque:deletar_item' item.pk %}" class="btn btn-danger me-2">Deletar Item</a>
+            <a href="{% url 'estoque:lista_itens' %}" class="btn btn-secondary">Voltar para a Lista</a>
+        </div>
+    </div>
+
+{% endblock %}
