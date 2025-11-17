@@ -1,13 +1,37 @@
-from django.shortcuts import render, redirect, get_object_or_404 # Importamos 'get_object_or_404'
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item
 from .forms import ItemForm
+from django.db.models import Q # Importamos Q para buscas complexas
+
+# --- CRUD: READ (R) com Busca/Filtro (HS-10) ---
+
+def lista_itens(request):
+    """
+    Lista todos os itens no estoque, com suporte à busca por nome (HS-10).
+    """
+    # Inicia o QuerySet com todos os itens
+    itens = Item.objects.all().order_by('nome')
+    
+    # Verifica se há um termo de busca na query string (ex: ?q=parafuso)
+    query = request.GET.get('q')
+    
+    if query:
+        # Filtra os itens onde o 'nome' contém o termo de busca (case-insensitive)
+        itens = itens.filter(
+            Q(nome__icontains=query)
+        ).distinct()
+    
+    context = {
+        'itens': itens,
+        'titulo': 'Estoque Geral',
+    }
+    return render(request, 'estoque/lista_itens.html', context)
 
 # --- CRUD: CREATE (C) ---
 
 def adicionar_item(request):
     """
-    View responsável por exibir e processar o formulário de adição de item.
-    (Código da criação omitido aqui para brevidade, mas deve estar no seu arquivo)
+    Adiciona um novo item ao estoque.
     """
     if request.method == 'POST':
         form = ItemForm(request.POST)
@@ -16,81 +40,62 @@ def adicionar_item(request):
             return redirect('estoque:lista_itens')
     else:
         form = ItemForm()
-
+    
     context = {
         'form': form,
-        'titulo': 'Adicionar Novo Item'
+        'titulo': 'Adicionar Novo Item',
     }
-    
-    return render(request, 'estoque/novo_item.html', context)
+    return render(request, 'estoque/item_form.html', context)
 
-# --- CRUD: READ (R) ---
+# --- CRUD: READ (R) - Detalhe ---
 
-def lista_itens(request):
+# Esta view não foi criada, mas é essencial para o link de nome na listagem
+def detalhe_item(request, pk):
     """
-    View responsável por buscar todos os itens no banco de dados 
-    e enviá-los para o template de listagem.
+    Exibe os detalhes de um item específico.
     """
-    itens = Item.objects.all().order_by('nome')
-    
+    item = get_object_or_404(Item, pk=pk)
     context = {
-        'itens': itens,
-        'titulo': 'Estoque Geral do Almoxarifado'
+        'item': item,
+        'titulo': f'Detalhe: {item.nome}',
     }
-    
-    return render(request, 'estoque/lista_itens.html', context)
+    return render(request, 'estoque/detalhe_item.html', context)
 
 
 # --- CRUD: UPDATE (U) ---
 
 def editar_item(request, pk):
     """
-    View responsável por carregar, exibir e processar o formulário de edição de item.
+    Edita um item existente.
     """
-    # 1. Busca o item pelo ID (pk), ou retorna 404 se não existir
     item = get_object_or_404(Item, pk=pk)
-    
     if request.method == 'POST':
-        # 2. Quando o formulário é submetido, passa a requisição POST E a instância do item
         form = ItemForm(request.POST, instance=item)
         if form.is_valid():
-            # 3. Salva as alterações na instância existente
             form.save()
             return redirect('estoque:lista_itens')
     else:
-        # 4. Se for GET, cria o formulário pré-preenchido com a instância
         form = ItemForm(instance=item)
-
+    
     context = {
         'form': form,
-        'titulo': f'Editar Item: {item.nome}'
+        'titulo': f'Editar Item: {item.nome}',
     }
-    
-    # Reutiliza o template do novo item, pois o formulário é o mesmo!
-    return render(request, 'estoque/novo_item.html', context)
+    return render(request, 'estoque/item_form.html', context)
 
 # --- CRUD: DELETE (D) ---
 
-def excluir_item(request, pk):
+def deletar_item(request, pk):
     """
-    View responsável por excluir um item do banco de dados e redirecionar.
-    
-    Recomendação: Em um projeto real, você criaria um template 
-    de confirmação (GET) e processaria a exclusão (POST). 
-    Aqui, simplificamos para processar a exclusão diretamente.
+    Deleta um item do estoque.
     """
     item = get_object_or_404(Item, pk=pk)
-    
     if request.method == 'POST':
         item.delete()
-        # Redireciona de volta para a listagem após a exclusão
         return redirect('estoque:lista_itens')
-    
-    # Se for GET (acesso direto pela URL), pedimos confirmação
+        
     context = {
         'item': item,
-        'titulo': f'Confirmar Exclusão: {item.nome}'
+        'titulo': f'Deletar Item: {item.nome}',
     }
-    
-    # Usaremos um template de confirmação simples
-    return render(request, 'estoque/confirmar_exclusao.html', context)
+    return render(request, 'estoque/delete_confirm.html', context)
