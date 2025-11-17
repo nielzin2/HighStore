@@ -14,6 +14,8 @@ urlpatterns = [
     path('editar/<int:pk>/', views.editar_item, name='editar_item'),
     
     # Rota 4: Excluir Item Específico (CRUD D)
-    # <int:pk> captura o ID para exclusão
-    path('excluir/<int:pk>/', views.excluir_item, name='excluir_item'), 
+    path('deletar/<int:pk>/', views.deletar_item, name='deletar_item'),
+    
+    # Rota 5: NOVO - Alerta de Estoque Mínimo (HS-12)
+    path('alerta/', views.alerta_estoque, name='alerta_estoque'),
 ]
