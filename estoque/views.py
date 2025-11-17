@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Item
-from .forms import ItemForm
+from .models import Item, Movimentacao
+from .forms import ItemForm, MovimentacaoForm
 from django.db.models import Q, F
+from django.db import transaction
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required # NOVO: Importa o decorador de segurança
 
-# --- CRUD: READ (R) com Busca/Filtro (HS-10) ---
+# --- VIEWS PROTEGIDAS COM @login_required (HS-15) ---
 
+@login_required
 def lista_itens(request):
     """
     Lista todos os itens no estoque, com suporte à busca por nome (HS-10).
     """
+    # ... (código existente da lista_itens) ...
     itens = Item.objects.all().order_by('nome')
     query = request.GET.get('q')
     
@@ -23,13 +28,12 @@ def lista_itens(request):
     }
     return render(request, 'estoque/lista_itens.html', context)
 
-# --- GESTÃO: ALERTA DE ESTOQUE MÍNIMO (HS-12) ---
-
+@login_required
 def alerta_estoque(request):
     """
-    Lista todos os itens cuja quantidade atual está abaixo ou igual ao estoque_minimo.
+    Lista todos os itens cuja quantidade atual está abaixo ou igual ao estoque_minimo (HS-12).
     """
-    # Filtra os itens onde 'quantidade' é menor ou igual a 'estoque_minimo' usando F (Field)
+    # ... (código existente da alerta_estoque) ...
     itens_criticos = Item.objects.filter(
         quantidade__lte=F('estoque_minimo')
     ).order_by('quantidade') 
@@ -37,89 +41,16 @@ def alerta_estoque(request):
     context = {
         'itens': itens_criticos,
         'titulo': 'ALERTA: Itens Abaixo do Estoque Mínimo',
-        'is_alerta_view': True # Flag para ajustes no template
+        'is_alerta_view': True
     }
-    
-    # Reutiliza o template de listagem
     return render(request, 'estoque/lista_itens.html', context)
 
-# --- CRUD: CREATE (C) ---
-
-def adicionar_item(request):
-    """
-    Adiciona um novo item ao estoque.
-    """
-    if request.method == 'POST':
-        form = ItemForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('estoque:lista_itens')
-    else:
-        form = ItemForm()
-    
-    context = {
-        'form': form,
-        'titulo': 'Adicionar Novo Item',
-    }
-    return render(request, 'estoque/item_form.html', context)
-
-# --- CRUD: READ (R) - Detalhe ---
-
-# Esta view não foi criada, mas é essencial para o link de nome na listagem
-def detalhe_item(request, pk):
-    """
-    Exibe os detalhes de um item específico.
-    """
-    item = get_object_or_404(Item, pk=pk)
-    context = {
-        'item': item,
-        'titulo': f'Detalhe: {item.nome}',
-    }
-    return render(request, 'estoque/detalhe_item.html', context)
-
-
-# --- CRUD: UPDATE (U) ---
-
-def editar_item(request, pk):
-    """
-    Edita um item existente.
-    """
-    item = get_object_or_404(Item, pk=pk)
-    if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return redirect('estoque:lista_itens')
-    else:
-        form = ItemForm(instance=item)
-    
-    context = {
-        'form': form,
-        'titulo': f'Editar Item: {item.nome}',
-    }
-    return render(request, 'estoque/item_form.html', context)
-
-# --- CRUD: DELETE (D) ---
-
-def deletar_item(request, pk):
-    """
-    Deleta um item do estoque.
-    """
-    item = get_object_or_404(Item, pk=pk)
-    if request.method == 'POST':
-        item.delete()
-        return redirect('estoque:lista_itens')
-        
-    context = {
-        'item': item,
-        'titulo': f'Deletar Item: {item.nome}',
-    }
-    return render(request, 'estoque/delete_confirm.html', context)
-
+@login_required
 def registrar_movimentacao(request, pk):
     """
-    Processa o formulário de entrada ou saída de estoque e atualiza a quantidade do item.
+    Processa o formulário de entrada ou saída de estoque e atualiza a quantidade do item (HS-14).
     """
+    # ... (código existente da registrar_movimentacao) ...
     item = get_object_or_404(Item, pk=pk)
     
     if request.method == 'POST':
@@ -128,24 +59,22 @@ def registrar_movimentacao(request, pk):
             quantidade_movimentada = form.cleaned_data['quantidade_movimentada']
             tipo = form.cleaned_data['tipo']
             
-            with transaction.atomic(): # Garante que as duas operações ocorram ou falhem juntas
+            with transaction.atomic():
                 
-                if tipo == 'S': # Saída
+                if tipo == 'S':
                     if item.quantidade < quantidade_movimentada:
                         messages.error(request, "ERRO: Quantidade insuficiente em estoque.")
                         return redirect('estoque:registrar_movimentacao', pk=pk)
                     
                     item.quantidade -= quantidade_movimentada
                     
-                elif tipo == 'E': # Entrada
+                elif tipo == 'E':
                     item.quantidade += quantidade_movimentada
                 
-                # Salva o log de movimentação
                 movimentacao = form.save(commit=False)
                 movimentacao.item = item
                 movimentacao.save()
                 
-                # Salva a nova quantidade do item
                 item.save()
             
             messages.success(request, f"Movimentação registrada e estoque de {item.nome} atualizado.")
@@ -161,10 +90,12 @@ def registrar_movimentacao(request, pk):
     }
     return render(request, 'estoque/movimentar_estoque.html', context)
     
+@login_required
 def historico_movimentacoes(request):
     """
-    Lista todas as movimentações registradas no sistema.
+    Lista todas as movimentações registradas no sistema (HS-14).
     """
+    # ... (código existente da historico_movimentacoes) ...
     movimentacoes = Movimentacao.objects.select_related('item').all()
     
     context = {
@@ -172,3 +103,76 @@ def historico_movimentacoes(request):
         'titulo': 'Histórico de Movimentações'
     }
     return render(request, 'estoque/historico_movimentacoes.html', context)
+
+
+@login_required
+def adicionar_item(request):
+    """
+    Adiciona um novo item ao estoque.
+    """
+    # ... (código existente da adicionar_item) ...
+    if request.method == 'POST':
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('estoque:lista_itens')
+    else:
+        form = ItemForm()
+    
+    context = {
+        'form': form,
+        'titulo': 'Adicionar Novo Item',
+    }
+    return render(request, 'estoque/item_form.html', context)
+
+@login_required
+def detalhe_item(request, pk):
+    """
+    Exibe os detalhes de um item específico.
+    """
+    # ... (código existente da detalhe_item) ...
+    item = get_object_or_404(Item, pk=pk)
+    context = {
+        'item': item,
+        'titulo': f'Detalhe: {item.nome}',
+    }
+    return render(request, 'estoque/detalhe_item.html', context)
+
+
+@login_required
+def editar_item(request, pk):
+    """
+    Edita um item existente.
+    """
+    # ... (código existente da editar_item) ...
+    item = get_object_or_404(Item, pk=pk)
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('estoque:lista_itens')
+    else:
+        form = ItemForm(instance=item)
+    
+    context = {
+        'form': form,
+        'titulo': f'Editar Item: {item.nome}',
+    }
+    return render(request, 'estoque/item_form.html', context)
+
+@login_required
+def deletar_item(request, pk):
+    """
+    Deleta um item do estoque.
+    """
+    # ... (código existente da deletar_item) ...
+    item = get_object_or_404(Item, pk=pk)
+    if request.method == 'POST':
+        item.delete()
+        return redirect('estoque:lista_itens')
+        
+    context = {
+        'item': item,
+        'titulo': f'Deletar Item: {item.nome}',
+    }
+    return render(request, 'estoque/delete_confirm.html', context)
