@@ -2,7 +2,7 @@ from django.db import models
 
 class Item(models.Model):
     """
-    Representa um item no estoque. Inclui HS-11 e HS-13 (Timestamps) para o futuro.
+    Representa um item no estoque.
     """
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
