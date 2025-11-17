@@ -115,3 +115,60 @@ def deletar_item(request, pk):
         'titulo': f'Deletar Item: {item.nome}',
     }
     return render(request, 'estoque/delete_confirm.html', context)
+
+def registrar_movimentacao(request, pk):
+    """
+    Processa o formulário de entrada ou saída de estoque e atualiza a quantidade do item.
+    """
+    item = get_object_or_404(Item, pk=pk)
+    
+    if request.method == 'POST':
+        form = MovimentacaoForm(request.POST)
+        if form.is_valid():
+            quantidade_movimentada = form.cleaned_data['quantidade_movimentada']
+            tipo = form.cleaned_data['tipo']
+            
+            with transaction.atomic(): # Garante que as duas operações ocorram ou falhem juntas
+                
+                if tipo == 'S': # Saída
+                    if item.quantidade < quantidade_movimentada:
+                        messages.error(request, "ERRO: Quantidade insuficiente em estoque.")
+                        return redirect('estoque:registrar_movimentacao', pk=pk)
+                    
+                    item.quantidade -= quantidade_movimentada
+                    
+                elif tipo == 'E': # Entrada
+                    item.quantidade += quantidade_movimentada
+                
+                # Salva o log de movimentação
+                movimentacao = form.save(commit=False)
+                movimentacao.item = item
+                movimentacao.save()
+                
+                # Salva a nova quantidade do item
+                item.save()
+            
+            messages.success(request, f"Movimentação registrada e estoque de {item.nome} atualizado.")
+            return redirect('estoque:lista_itens')
+            
+    else:
+        form = MovimentacaoForm()
+        
+    context = {
+        'item': item,
+        'form': form,
+        'titulo': f'Movimentar Estoque: {item.nome}'
+    }
+    return render(request, 'estoque/movimentar_estoque.html', context)
+    
+def historico_movimentacoes(request):
+    """
+    Lista todas as movimentações registradas no sistema.
+    """
+    movimentacoes = Movimentacao.objects.select_related('item').all()
+    
+    context = {
+        'movimentacoes': movimentacoes,
+        'titulo': 'Histórico de Movimentações'
+    }
+    return render(request, 'estoque/historico_movimentacoes.html', context)
