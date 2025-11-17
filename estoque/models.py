@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 
 # Tipos de Movimentação (usado para o campo 'tipo')
 TIPO_MOVIMENTACAO = (
@@ -19,6 +20,13 @@ class Item(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @admin.display(boolean=True, description="Em Reposição")
+    def precisa_repor(self):
+        """
+        Verifica se a quantidade atual está abaixo ou igual ao estoque mínimo.
+        """
+        return self.quantidade <= self.estoque_minimo
 
     class Meta:
         ordering = ['nome']
