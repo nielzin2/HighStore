@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Alertas de Estoque{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{{ titulo }}</h1>
+
+    {% if alertas %}
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark fw-bold">
+                ⚠️ {{ alertas|length }} Itens Precisando de Reposição
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Quantidade Atual</th>
+                                <th scope="col">Estoque Mínimo</th>
+                                <th scope="col">Necessidade de Reposição</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for alerta in alertas %}
+                            <tr class="table-warning">
+                                <th scope="row">{{ alerta.id }}</th>
+                                <td>{{ alerta.nome }}</td>
+                                <td>{{ alerta.quantidade_atual }}</td>
+                                <td>{{ alerta.estoque_minimo }}</td>
+                                <td>{{ alerta.necessidade }}</td>
+                                <td>
+                                    <a href="{% url 'estoque:registrar_movimentacao' pk=alerta.id %}" class="btn btn-sm btn-outline-success">Repor</a> 
+                                    <a href="{% url 'estoque:editar_item' pk=alerta.id %}" class="btn btn-sm btn-outline-info">Ver Detalhes</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-success shadow-sm" role="alert">
+            ✅ Parabéns! Não há itens com estoque baixo.
+        </div>
+    {% endif %}
+
+{% endblock %}
