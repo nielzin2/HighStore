@@ -5,6 +5,7 @@ from django.db.models import Q, F
 from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required # NOVO: Importa o decorador de segurança
+from .services import obter_alertas_estoque_baixo, processar_movimentacao
 
 # --- VIEWS PROTEGIDAS COM @login_required (HS-15) ---
 
