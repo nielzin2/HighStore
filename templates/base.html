@@ -10,11 +10,10 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<body class="bg-light"> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'estoque:lista_itens' %}">HighStore</a>
+            <a class="navbar-brand text-primary fw-bold" href="{% url 'estoque:lista_itens' %}">HighStore</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -33,33 +32,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'estoque:historico_movimentacoes' %}">Histórico</a>
                     </li>
-                </ul>
-                
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'estoque:lista_itens' %}">Estoque</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'estoque:adicionar_item' %}">Adicionar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'estoque:alerta_estoque' %}">Alertas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'estoque:historico_movimentacoes' %}">Histórico</a>
+                        <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
                     </li>
                 </ul>
                 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if user.is_authenticated %}
                         <li class="nav-item me-2">
-                            <span class="nav-link text-white">Olá, **{{ user.username }}**!</span>
+                            <span class="nav-link text-dark">Olá, **{{ user.username }}**!</span>
                         </li>
-                        
                         <li class="nav-item">
                             <form method="post" action="{% url 'logout' %}" style="display: inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-danger text-white">Sair</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Sair</button>
                             </form>
                         </li>
                     {% else %}
@@ -69,11 +55,11 @@
                         </li>
                     {% endif %}
                 </ul>
-                </div>
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-5 pt-3">
         {% block content %}
             {% endblock %}
     </div>
