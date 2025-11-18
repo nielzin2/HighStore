@@ -31,20 +31,14 @@ def lista_itens(request):
 
 @login_required
 def alerta_estoque(request):
-    """
-    Lista todos os itens cuja quantidade atual está abaixo ou igual ao estoque_minimo (HS-12).
-    """
-    # ... (código existente da alerta_estoque) ...
-    itens_criticos = Item.objects.filter(
-        quantidade__lte=F('estoque_minimo')
-    ).order_by('quantidade') 
-    
+    # AQUI usamos a função do services.py que retorna uma LISTA DE DICIONÁRIOS
+    itens_em_alerta = obter_alertas_estoque_baixo()
+
     context = {
-        'itens': itens_criticos,
-        'titulo': 'ALERTA: Itens Abaixo do Estoque Mínimo',
-        'is_alerta_view': True
+        'titulo': 'Alertas de Estoque Baixo',
+        'alertas': itens_em_alerta, # Agora é uma lista de dicionários!
     }
-    return render(request, 'estoque/lista_itens.html', context)
+    return render(request, 'estoque/alerta_estoque.html', context)
 
 @login_required
 def registrar_movimentacao(request, pk):
