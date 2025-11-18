@@ -14,11 +14,11 @@ O projeto atinge o nível **Excelente** em todos os critérios e garante o **Pon
 
 | Critério | Status | Detalhamento da Implementação |
 | :--- | :--- | :--- |
-| **CRUD Completo** | ✅ **Excelente** | Operações C, R, U, D completas, funcionais e seguras para Itens e Logística. |
-| **Lógica e Estrutura** | ✅ **Excelente** | Arquitetura MVT robusta do Django. Lógica de estoque baixo e controle transacional. |
-| **Listas e Dicionários** | ✅ **Excelente** | Lógica de alertas (`obter_alertas_estoque_baixo`) isolada em `services.py` que manipula e retorna **Listas de Dicionários** nativas do Python. |
-| **Modularização (Extra)**| ✅ **Excelente (+0,5)** | Lógica de negócio isolada em **`estoque/services.py`** com funções de alta coesão e baixo acoplamento. |
-| **Segurança (Adicional)** | ✅ **Funcional** | Todas as rotas de gestão estão protegidas por **Login e Autenticação** (`@login_required`). |
+| **CRUD Completo** | ✅ **Ok** | Operações C, R, U, D completas, funcionais e seguras para Itens e Logística. |
+| **Lógica e Estrutura** | ✅ **Ok** | Arquitetura MVT robusta do Django. Lógica de estoque baixo e controle transacional. |
+| **Listas e Dicionários** | ✅ **Ok** | Lógica de alertas (`obter_alertas_estoque_baixo`) isolada em `services.py` que manipula e retorna **Listas de Dicionários** nativas do Python. |
+| **Modularização (Extra)**| ✅ **Ok** | Lógica de negócio isolada em **`estoque/services.py`** com funções de alta coesão e baixo acoplamento. |
+| **Segurança (Adicional)** | ✅ **Ok** | Todas as rotas de gestão estão protegidas por **Login e Autenticação** (`@login_required`). |
 
 ---
 
