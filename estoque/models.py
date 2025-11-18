@@ -17,7 +17,7 @@ class Item(models.Model):
     quantidade = models.IntegerField(default=0)
     localizacao = models.CharField(max_length=50, blank=True, null=True)
     
-    # LINHA 19 CORRIGIDA: HS-11: Campo para Estoque Mínimo
+    # HS-11: Campo para Estoque Mínimo
     estoque_minimo = models.IntegerField(default=5, help_text="Quantidade mínima para alerta.")
     
     # HS-13: Campos de Data e Hora
@@ -30,9 +30,9 @@ class Item(models.Model):
     def __str__(self):
         return self.nome
         
-    # HS-16: Usa o decorador para o filtro do Admin
-    @admin.display(boolean=True, description="Em Reposição")
-    def precisa_repor(self):
+    # CORREÇÃO HS-16: Método renomeado e com decorador para Admin
+    @admin.display(boolean=True, description="Estoque Baixo")
+    def estoque_baixo(self):
         """
         Verifica se a quantidade atual está abaixo ou igual ao estoque mínimo.
         """
