@@ -3,72 +3,84 @@
 {% block title %}Estoque Geral{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4">{{ titulo }}</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">{{ titulo }}</h1>
+        <div class="d-flex">
+            <a href="{% url 'estoque:adicionar_item' %}" class="btn btn-primary me-2">
+                ➕ Adicionar Item
+            </a>
+            <a href="{% url 'estoque:historico_movimentacoes' %}" class="btn btn-outline-secondary">
+                Histórico
+            </a>
+        </div>
+    </div>
 
-    <form class="d-flex mb-4" method="GET">
+    <form class="d-flex mb-4 p-3 bg-white rounded shadow-sm border" method="GET">
         <input 
             class="form-control me-2" 
             type="search" 
-            placeholder="Buscar por nome do item..." 
+            placeholder="Buscar por nome, descrição ou localização..." 
             aria-label="Search" 
             name="q" 
             value="{{ request.GET.q|default:'' }}"
         >
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
+        <button class="btn btn-success" type="submit">Buscar</button>
         {% if request.GET.q %}
             <a href="{% url 'estoque:lista_itens' %}" class="btn btn-outline-secondary ms-2">Limpar</a>
         {% endif %}
     </form>
     
-    <a href="{% url 'estoque:adicionar_item' %}" class="btn btn-primary mb-3">
-        ➕ Adicionar Novo Item
-    </a>
-    <a href="{% url 'estoque:historico_movimentacoes' %}" class="btn btn-secondary mb-3 ms-2">
-        Histórico de Movimentações
-    </a>
-    
     {% if itens %}
-        <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Quantidade</th>
-                        <th scope="col">Estoque Mín.</th>
-                        <th scope="col">Status</th> 
-                        <th scope="col">Localização</th>
-                        <th class="acoes text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in itens %}
-                    <tr class="{% if item.estoque_baixo %}table-danger{% endif %}">
-                        <th scope="row">{{ item.pk }}</th>
-                        <td>{{ item.nome }}</td>
-                        <td>{{ item.quantidade }}</td>
-                        <td>{{ item.estoque_minimo }}</td>
-                        <td>
-                            {% if item.estoque_baixo %}
-                                <span class="badge bg-danger">REPOR</span>
-                            {% else %}
-                                <span class="badge bg-success">OK</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ item.localizacao }}</td>
-                        <td class="acoes text-center">
-                            <a href="{% url 'estoque:editar_item' pk=item.id %}" class="btn btn-sm btn-info me-2">Editar</a> 
-                            <a href="{% url 'estoque:registrar_movimentacao' pk=item.id %}" class="btn btn-sm btn-success me-2">Movimentar</a> 
-                            <a href="{% url 'estoque:deletar_item' pk=item.id %}" class="btn btn-sm btn-danger">Excluir</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                **Itens em Estoque** (Total: {{ itens|length }})
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Estoque Mín.</th>
+                                <th scope="col">Status</th> 
+                                <th scope="col">Localização</th>
+                                <th class="acoes text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in itens %}
+                            <tr class="{% if item.estoque_baixo %}table-danger{% endif %}">
+                                <th scope="row">{{ item.id }}</th>
+                                <td>{{ item.nome }}</td>
+                                <td>{{ item.quantidade }}</td>
+                                <td>{{ item.estoque_minimo }}</td>
+                                <td>
+                                    {% if item.estoque_baixo %}
+                                        <span class="badge bg-danger">REPOR</span>
+                                    {% else %}
+                                        <span class="badge bg-success">OK</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ item.localizacao }}</td>
+                                <td class="acoes text-center">
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'estoque:editar_item' pk=item.id %}" class="btn btn-sm btn-outline-info">Editar</a> 
+                                        <a href="{% url 'estoque:registrar_movimentacao' pk=item.id %}" class="btn btn-sm btn-outline-success">Movimentar</a> 
+                                        <a href="{% url 'estoque:deletar_item' pk=item.id %}" class="btn btn-sm btn-outline-danger">Excluir</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     {% else %}
-        <div class="alert alert-info" role="alert">
-            Nenhum item encontrado.
+        <div class="alert alert-info shadow-sm" role="alert">
+            Nenhum item encontrado. Comece adicionando um novo!
         </div>
     {% endif %}
 
