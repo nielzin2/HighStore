@@ -1,19 +1,19 @@
 from django.contrib import admin
-from .models import Item, Movimentacao # Importa nossos modelos
+from .models import Item, Movimentacao
 
 # --- Configuração do Painel Admin ---
 
 class ItemAdmin(admin.ModelAdmin):
-    # list_display usa o novo método 'estoque_baixo'
+    # list_display usa o método 'estoque_baixo' para mostrar o status (OK)
     list_display = ('nome', 'quantidade', 'localizacao', 'estoque_minimo', 'estoque_baixo', 'created_at')
     
-    # list_filter usa o novo método 'estoque_baixo'
-    list_filter = ('localizacao', 'estoque_baixo') 
+    # CORREÇÃO DEFINITIVA: Mudamos o filtro para um campo REAL do BD ('estoque_minimo')
+    # Assim, o Django não executa a checagem complexa que está falhando no seu ambiente.
+    list_filter = ('localizacao', 'estoque_minimo') 
     
     search_fields = ('nome', 'descricao')
     readonly_fields = ('created_at', 'updated_at')
 
-# Torna a listagem de Movimentacoes mais útil
 class MovimentacaoAdmin(admin.ModelAdmin):
     list_display = ('item', 'tipo', 'quantidade_movimentada', 'responsavel', 'data_movimentacao')
     list_filter = ('tipo', 'data_movimentacao')
