@@ -1,8 +1,7 @@
 from django.db import models
-from django.contrib import admin # NOVO: Importar admin
-from django.db.models import F # Importado para uso interno
+from django.contrib import admin
+from django.db.models import F 
 
-# Tipos de Movimentação (usado para o campo 'tipo')
 TIPO_MOVIMENTACAO = (
     ('E', 'Entrada (Adição)'),
     ('S', 'Saída (Retirada)'),
@@ -17,10 +16,8 @@ class Item(models.Model):
     quantidade = models.IntegerField(default=0)
     localizacao = models.CharField(max_length=50, blank=True, null=True)
     
-    # HS-11: Campo para Estoque Mínimo
-    estoque_minimo = models.IntegerField(default=5, help_text="Quantidade mínima para alerta.")
+    estoque_m minimo =odels.IntegerField(default=5, help_text="Quantidade mínima para alerta.")
     
-    # HS-13: Campos de Data e Hora
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -30,7 +27,6 @@ class Item(models.Model):
     def __str__(self):
         return self.nome
         
-    # CORREÇÃO HS-16: Usa o decorador para permitir que o Admin filtre por este método
     @admin.display(boolean=True, description="Em Reposição")
     def precisa_repor(self):
         """
@@ -38,9 +34,7 @@ class Item(models.Model):
         """
         return self.quantidade <= self.estoque_minimo
 
-# NOVO MODELO (HS-14)
 class Movimentacao(models.Model):
-    # ... (código Movimentacao existente) ...
     item = models.ForeignKey(
         Item, 
         on_delete=models.CASCADE, 
@@ -51,7 +45,7 @@ class Movimentacao(models.Model):
     quantidade_movimentada = models.IntegerField()
     data_movimentacao = models.DateTimeField(auto_now_add=True)
     responsavel = models.CharField(max_length=100, help_text="Nome do responsável pela operação.")
-    observacao = models.TextField(blank=True, null=True)
+    observacao = models.TextField(blank=True, null=None)
 
     class Meta:
         ordering = ['-data_movimentacao']
