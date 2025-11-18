@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib import admin
+from django.contrib import admin # Importar admin
 from django.db.models import F 
 
+# Tipos de Movimentação (usado para o campo 'tipo')
 TIPO_MOVIMENTACAO = (
     ('E', 'Entrada (Adição)'),
     ('S', 'Saída (Retirada)'),
@@ -16,8 +17,10 @@ class Item(models.Model):
     quantidade = models.IntegerField(default=0)
     localizacao = models.CharField(max_length=50, blank=True, null=True)
     
-    estoque_m minimo =odels.IntegerField(default=5, help_text="Quantidade mínima para alerta.")
+    # LINHA 19 CORRIGIDA: HS-11: Campo para Estoque Mínimo
+    estoque_minimo = models.IntegerField(default=5, help_text="Quantidade mínima para alerta.")
     
+    # HS-13: Campos de Data e Hora
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -27,6 +30,7 @@ class Item(models.Model):
     def __str__(self):
         return self.nome
         
+    # HS-16: Usa o decorador para o filtro do Admin
     @admin.display(boolean=True, description="Em Reposição")
     def precisa_repor(self):
         """
@@ -34,6 +38,7 @@ class Item(models.Model):
         """
         return self.quantidade <= self.estoque_minimo
 
+# NOVO MODELO (HS-14)
 class Movimentacao(models.Model):
     item = models.ForeignKey(
         Item, 
