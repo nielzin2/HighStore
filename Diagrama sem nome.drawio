@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0" version="29.0.3">
+  <diagram name="Página-1" id="ZWplT_E-ItYG0wOK8FZo">
+    <mxGraphModel dx="1477" dy="814" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-1" target="9GE_jsZm5DmUZ69piwmT-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="417" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-1" value="Início&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Acessar a URL&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="354" y="10" width="126" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="280" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="250" y="210" />
+              <mxPoint x="250" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-11" value="Não" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9GE_jsZm5DmUZ69piwmT-8">
+          <mxGeometry x="-0.3401" y="-3" relative="1" as="geometry">
+            <mxPoint y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-12" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9GE_jsZm5DmUZ69piwmT-10">
+          <mxGeometry x="-0.388" y="1" relative="1" as="geometry">
+            <mxPoint y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-3" value="Usuário logado?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="377" y="170" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-13" value="&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;Redirecionar para a tela de Login (/accounts/login/).&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-14">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-14" value="&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;Acessar o Painel Principal/Lista de Itens.&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-19" value="&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Exibir Erro e Retornar ao Login.&lt;/span&gt;&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="540" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-20">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-20" value="&lt;div&gt;&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;Continuar para o Painel Principal.&lt;/p&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="494" y="550" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-27">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="840" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-27" value="&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;Visualizar a Lista Principal de Itens.&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="690" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-29">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="405" y="980" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-29" value="&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;Aplicar filtros de busca (se houver).&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="840" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-33">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-33">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-33" value="Item com estoque baixo?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="347.5" y="980" width="112.5" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-36" target="9GE_jsZm5DmUZ69piwmT-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="230" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-43" value="Não" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9GE_jsZm5DmUZ69piwmT-37">
+          <mxGeometry x="-0.5468" y="-3" relative="1" as="geometry">
+            <mxPoint y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="9GE_jsZm5DmUZ69piwmT-36" target="9GE_jsZm5DmUZ69piwmT-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-36" value="Verificar credenciais" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360.5" y="410" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-40" value="Sim&lt;div&gt;&lt;p data-pm-slice=&quot;1 1 []&quot;&gt;Destacar visualmente o item em alerta na lista.&lt;/p&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="870" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-42" value="Não&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Continuar no fluxo normal&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="624" y="870" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="9GE_jsZm5DmUZ69piwmT-44" value="Sim" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="435" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
